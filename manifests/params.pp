@@ -25,6 +25,7 @@ class munin::params {
   $autoconfigure_template = 'munin/munin-autoconfigure.erb'
   $graph_strategy = 'cron'
   $graph_period = 'second'
+  $graph_jobs = '6'
 
   $package_perlcidr = $::operatingsystem ? {
     /(?i:Centos|Redhat|Scientific|Amazon|Linux)/ => $::operatingsystemrelease ? {

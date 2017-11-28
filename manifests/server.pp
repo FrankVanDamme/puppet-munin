@@ -27,6 +27,21 @@ class munin::server inherits munin {
     audit   => $munin::manage_audit,
   }
 
+  if $munin::bool_include_dir_purge {
+    file { 'munin.include_dir_server':
+      ensure  => directory,
+      path    => $munin::include_dir,
+      mode    => '0755',
+      owner   => $munin::config_file_owner,
+      group   => $munin::config_file_group,
+      require => Package['munin_server'],
+      purge   => true,
+      source => 'puppet:///modules/munin/empty',
+      ignore => ['.gitkeep'],
+      recurse => true,
+      force => true,
+    }
+  } else {
   file { 'munin.include_dir_server':
     ensure  => directory,
     path    => $munin::include_dir,
@@ -36,15 +51,6 @@ class munin::server inherits munin {
     require => Package['munin_server'],
     purge   => true,
   }
-
-  if $munin::bool_include_dir_purge {
-    File ['munin.include_dir_server'] {
-      source => 'puppet:///modules/munin/empty',
-      ignore => ['.gitkeep'],
-      recurse => true,
-      purge => true,
-      force => true,
-    }
   }
 
   # Collects all the munin clients configs

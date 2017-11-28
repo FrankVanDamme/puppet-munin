@@ -32,6 +32,7 @@ class munin::params {
   }
   $graph_strategy = 'cron'
   $graph_period = 'second'
+  $cgi_graph_jobs = '6'
 
   $package_perlcidr = $::operatingsystem ? {
     /(?i:Centos|Redhat|Scientific|Amazon|Linux)/ => $::operatingsystemrelease ? {

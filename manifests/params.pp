@@ -153,6 +153,7 @@ class munin::params {
   #   log_file => '/var/log/munin/munin.log',
   # }
   $log_file = $::operatingsystem ? {
+    /(Debian|Ubuntu)/                                   => '/var/log/munin/munin-node.log',
     /(?i:RedHat|Centos|Scientific|Fedora|Amazon|Linux)/ => '/var/log/munin-node/munin-node.log',
     /(?i:OpenBSD)/                                      => '/var/log/munin/munin-node.log',
     default                                             => '/var/log/munin/munin.log',

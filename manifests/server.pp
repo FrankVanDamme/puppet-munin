@@ -34,6 +34,7 @@ class munin::server inherits munin {
     owner   => $munin::config_file_owner,
     group   => $munin::config_file_group,
     require => Package['munin_server'],
+    purge   => true,
   }
 
   if $munin::bool_include_dir_purge {

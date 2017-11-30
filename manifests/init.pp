@@ -286,6 +286,7 @@ class munin (
   $extra_plugins       = params_lookup( 'extra_plugins' ),
   $graph_strategy      = params_lookup( 'graph_strategy' ),
   $graph_period        = params_lookup( 'graph_period' ),
+  $cgi_graph_jobs          = params_lookup( 'cgi_graph_jobs' ),
   $autoconfigure       = params_lookup( 'autoconfigure' ),
   $autoconfigure_template = params_lookup( 'autoconfigure_template' ),
   $autoconfigure_file  = params_lookup( 'autoconfigure_file' ),

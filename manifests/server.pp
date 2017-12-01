@@ -42,14 +42,15 @@ class munin::server inherits munin {
       force => true,
     }
   } else {
-  file { 'munin.include_dir_server':
-    ensure  => directory,
-    path    => $munin::include_dir,
-    mode    => '0755',
-    owner   => $munin::config_file_owner,
-    group   => $munin::config_file_group,
-    require => Package['munin_server'],
-    purge   => true,
+    file { 'munin.include_dir_server':
+      ensure  => directory,
+      path    => $munin::include_dir,
+      mode    => '0755',
+      owner   => $munin::config_file_owner,
+      group   => $munin::config_file_group,
+      require => Package['munin_server'],
+      purge   => true,
+    }
   }
 
   if $munin::bool_include_dir_purge {

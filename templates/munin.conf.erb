@@ -11,7 +11,7 @@ includedir <%= scope.lookupvar('munin::include_dir') %>
 graph_period <%= scope.lookupvar('munin::graph_period') %>
 graph_strategy <%= scope.lookupvar('munin::graph_strategy') %>
 munin_cgi_graph_jobs <%= scope.lookupvar('munin::cgi_graph_jobs') %>
-max_graph_jobs 15
+max_graph_jobs <%= scope.lookupvar('munin::max_graph_jobs') %>
 
 #contact.someuser.command mail -s "Munin notification" somejuser@fnord.comm
 #contact.anotheruser.command mail -s "Munin notification" anotheruser@blibb.comm

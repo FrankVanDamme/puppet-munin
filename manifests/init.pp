@@ -26,6 +26,12 @@
 #   Boolean that defines if you want to add some extra plugins provided
 #   by the module. Default: false
 #
+# [*html_strategy*]
+#   html_strategy denotes whether the htmls are created every five minutes from cron
+#   or on demand when loading the webpage with a CGI script. Please note that you have
+#   to configure the web server separately.
+#   Allowed: cron (the default) or cgi
+#
 # [*graph_strategy*]
 #   graph_strategy denotes whether the graphs are created every five minutes from cron
 #   or on demand when loading the webpage with a CGI script. Please note that you have
@@ -284,6 +290,7 @@ class munin (
   $grouplogic          = params_lookup( 'grouplogic' ),
   $address             = params_lookup( 'address' ),
   $extra_plugins       = params_lookup( 'extra_plugins' ),
+  $html_strategy      = params_lookup( 'html_strategy' ),
   $graph_strategy      = params_lookup( 'graph_strategy' ),
   $graph_period        = params_lookup( 'graph_period' ),
   $cgi_graph_jobs          = params_lookup( 'cgi_graph_jobs' ),

@@ -30,6 +30,7 @@ class munin::params {
     /(?i:OpenBSD)/ => '/usr/local/sbin/munin-autoconfigure',
     default        => '/etc/cron.daily/munin-autoconfigure',
   }
+  $html_strategy = 'cron'
   $graph_strategy = 'cron'
   $graph_period = 'second'
   $cgi_graph_jobs = '6'

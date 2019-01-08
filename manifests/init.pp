@@ -555,7 +555,7 @@ class munin (
 
 
   ### Include custom class if $my_class is set
-  if $munin::my_class {
+  if $munin::my_class != '' {
     include $munin::my_class
   }
 

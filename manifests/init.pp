@@ -290,11 +290,11 @@ class munin (
   $grouplogic          = params_lookup( 'grouplogic' ),
   $address             = params_lookup( 'address' ),
   $extra_plugins       = params_lookup( 'extra_plugins' ),
-  $html_strategy      = params_lookup( 'html_strategy' ),
+  $html_strategy       = params_lookup( 'html_strategy' ),
   $graph_strategy      = params_lookup( 'graph_strategy' ),
   $graph_period        = params_lookup( 'graph_period' ),
-  $cgi_graph_jobs          = params_lookup( 'cgi_graph_jobs' ),
-  $max_graph_jobs          = params_lookup( 'max_graph_jobs' ),
+  $cgi_graph_jobs      = params_lookup( 'cgi_graph_jobs' ),
+  $max_graph_jobs      = params_lookup( 'max_graph_jobs' ),
   $autoconfigure       = params_lookup( 'autoconfigure' ),
   $autoconfigure_template = params_lookup( 'autoconfigure_template' ),
   $autoconfigure_file  = params_lookup( 'autoconfigure_file' ),
@@ -458,7 +458,7 @@ class munin (
   ### Munin specifics
 
   if $munin::bool_server_local == true
-  or $munin::server == $::ipaddress {
+  or $munin::server == $facts[networking][ip] {
     include munin::server
   }
 
@@ -478,7 +478,7 @@ class munin (
       replace => $munin::manage_file_replace,
       audit   => $munin::manage_audit,
     }
-    if $::operatingsystem == 'OpenBSD' {
+    if $facts[os][name] == 'OpenBSD' {
       cron { 'munin-autoconfigure':
         ensure  => $munin::manage_file,
         command => $munin::autoconfigure_file,
@@ -543,9 +543,9 @@ class munin (
   }
 
   # Exported Resource for Server automatic configuration
-  @@file { "${munin::include_dir}/${::fqdn}.conf":
+  @@file { "${munin::include_dir}/${facts[networking][fqdn]}.conf":
     ensure  => $munin::manage_file,
-    path    => "${munin::include_dir}/${::fqdn}.conf",
+    path    => "${munin::include_dir}/${facts[networking][fqdn]}.conf",
     mode    => $munin::config_file_mode,
     owner   => $munin::config_file_owner,
     group   => $munin::config_file_group,

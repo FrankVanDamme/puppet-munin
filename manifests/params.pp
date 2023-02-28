@@ -17,16 +17,16 @@ class munin::params {
   ### Module Specific parameters
   $server = '127.0.0.1'
   $server_local = false
-  $address = $::ipaddress
+  $address = $facts[networking][ip]
   $folder = ''
   $grouplogic = ''
   $extra_plugins = false
   $autoconfigure = true
-  $autoconfigure_template = $::operatingsystem ? {
+  $autoconfigure_template = $facts[os][name] ? {
     /(?i:OpenBSD)/ => 'munin/munin-autoconfigure-openbsd.erb',
     default        => 'munin/munin-autoconfigure.erb',
   }
-  $autoconfigure_file = $::operatingsystem ? {
+  $autoconfigure_file = $facts[os][name] ? {
     /(?i:OpenBSD)/ => '/usr/local/sbin/munin-autoconfigure',
     default        => '/etc/cron.daily/munin-autoconfigure',
   }
@@ -36,8 +36,8 @@ class munin::params {
   $cgi_graph_jobs = '6'
   $max_graph_jobs = '15'
 
-  $package_perlcidr = $::operatingsystem ? {
-    /(?i:Centos|Redhat|Scientific|Amazon|Linux)/ => $::operatingsystemrelease ? {
+  $package_perlcidr = $facts[os][name] ? {
+    /(?i:Centos|Redhat|Scientific|Amazon|Linux)/ => $facts[os][release][full] ? {
       4        => 'perl-Net-CIDR-Lite',
       default  => 'perl-Net-CIDR',
     },
@@ -45,7 +45,7 @@ class munin::params {
     default                                      => 'libnet-cidr-perl',
   }
 
-  $package_server = $::operatingsystem ? {
+  $package_server = $facts[os][name] ? {
     /(?i:OpenBSD)/ => 'munin-server',
     default        => 'munin',
   }
@@ -61,90 +61,90 @@ class munin::params {
 
   $conf_dir_active_plugins = '/etc/munin/plugins/'
 
-  $web_dir = $::operatingsystem ? {
+  $web_dir = $facts[os][name] ? {
     /(?i:Ubuntu|Debian|Mint)/ => '/var/cache/munin/www',
     default                   => '/var/www/html/munin',
   }
 
-  $plugins_dir = $::operatingsystem ? {
+  $plugins_dir = $facts[os][name] ? {
     default => '/usr/share/munin/plugins',
   }
 
-  $restart_or_reload = $::operatingsystem ? {
+  $restart_or_reload = $facts[os][name] ? {
     /(?i:Debian)/ => 'restart',
     default       => 'reload',
   }
 
   ### Application related parameters
 
-  $package = $::operatingsystem ? {
+  $package = $facts[os][name] ? {
     default => 'munin-node',
   }
 
-  $service = $::operatingsystem ? {
+  $service = $facts[os][name] ? {
     /(?i:OpenBSD)/ => 'munin_node',
     default        => 'munin-node',
   }
 
-  $service_status = $::operatingsystem ? {
+  $service_status = $facts[os][name] ? {
     default => true,
   }
 
-  $process = $::operatingsystem ? {
-    /(?i:Ubuntu)/ => $::operatingsystemrelease ? {
+  $process = $facts[os][name] ? {
+    /(?i:Ubuntu)/ => $facts[os][release][full] ? {
       '12.04'  => 'munin',
       default => 'munin-node',
     },
     default => 'munin-node',
   }
 
-  $process_args = $::operatingsystem ? {
-    /(?i:Ubuntu)/ => $::operatingsystemrelease ? {
+  $process_args = $facts[os][name] ? {
+    /(?i:Ubuntu)/ => $facts[os][release][full] ? {
       '12.04'  => 'munin-node',
       default => '',
     },
     default => '',
   }
 
-  $process_user = $::operatingsystem ? {
+  $process_user = $facts[os][name] ? {
     default => 'munin',
   }
 
-  $config_dir = $::operatingsystem ? {
+  $config_dir = $facts[os][name] ? {
     default => '/etc/munin',
   }
 
-  $config_file = $::operatingsystem ? {
+  $config_file = $facts[os][name] ? {
     default => '/etc/munin/munin-node.conf',
   }
 
-  $config_file_mode = $::operatingsystem ? {
+  $config_file_mode = $facts[os][name] ? {
     default => '0644',
   }
 
-  $config_file_owner = $::operatingsystem ? {
+  $config_file_owner = $facts[os][name] ? {
     default => 'root',
   }
 
-  $config_file_group = $::operatingsystem ? {
+  $config_file_group = $facts[os][name] ? {
     /(?i:OpenBSD)/ => 'wheel',
     default        => 'root',
   }
 
-  $config_file_init = $::operatingsystem ? {
+  $config_file_init = $facts[os][name] ? {
     /(?i:Debian|Ubuntu|Mint)/ => '/etc/default/munin',
     default                   => '/etc/sysconfig/munin',
   }
 
-  $pid_file = $::operatingsystem ? {
+  $pid_file = $facts[os][name] ? {
     default => '/var/run/munin/munin-node.pid',
   }
 
-  $data_dir = $::operatingsystem ? {
+  $data_dir = $facts[os][name] ? {
     default => '/etc/munin',
   }
 
-  $log_dir = $::operatingsystem ? {
+  $log_dir = $facts[os][name] ? {
     default => '/var/log/munin',
   }
 
@@ -155,7 +155,7 @@ class munin::params {
   # class { 'munin':
   #   log_file => '/var/log/munin/munin.log',
   # }
-  $log_file = $::operatingsystem ? {
+  $log_file = $facts[os][name] ? {
     /(Debian|Ubuntu)/                                   => '/var/log/munin/munin-node.log',
     /(?i:RedHat|Centos|Scientific|Fedora|Amazon|Linux)/ => '/var/log/munin-node/munin-node.log',
     /(?i:OpenBSD)/                                      => '/var/log/munin/munin-node.log',
@@ -164,7 +164,7 @@ class munin::params {
 
   $fcgi_runlevels = '2345'
 
-  $fcgi_command = $::operatingsystem ? {
+  $fcgi_command = $facts[os][name] ? {
     /(?i:Ubuntu|Debian|Mint)/ => '/usr/bin/spawn-fcgi -n -s /var/run/munin/fcgi-graph.sock -U www-data -u www-data -g www-data /usr/lib/munin/cgi/munin-cgi-graph',
     default                   => '/usr/bin/spawn-fcgi -n -s /var/run/munin/fcgi-graph.sock -U www-data -u www-data -g www-data munin-fastcgi-graph',
   }
@@ -190,11 +190,11 @@ class munin::params {
   ### General module variables that can have a site or per module default
   $monitor = false
   $monitor_tool = ''
-  $monitor_target = $::ipaddress
+  $monitor_target = $facts[networking][ip]
   $firewall = false
   $firewall_tool = ''
   $firewall_src = '0.0.0.0/0'
-  $firewall_dst = $::ipaddress
+  $firewall_dst = $facts[networking][ip]
   $puppi = false
   $puppi_helper = 'standard'
   $debug = false

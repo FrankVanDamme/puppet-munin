@@ -156,10 +156,10 @@ class munin::params {
   #   log_file => '/var/log/munin/munin.log',
   # }
   $log_file = $facts[os][name] ? {
-    /(Debian|Ubuntu)/                                   => '/var/log/munin/munin-node.log',
-    /(?i:RedHat|Centos|Scientific|Fedora|Amazon|Linux)/ => '/var/log/munin-node/munin-node.log',
-    /(?i:OpenBSD)/                                      => '/var/log/munin/munin-node.log',
-    default                                             => '/var/log/munin/munin.log',
+    /(Debian|Ubuntu)/                                         => '/var/log/munin/munin-node.log',
+    /(?i:RedHat|Centos|Scientific|Fedora|Amazon|Linux|Rocky)/ => '/var/log/munin-node/munin-node.log',
+    /(?i:OpenBSD)/                                            => '/var/log/munin/munin-node.log',
+    default                                                   => '/var/log/munin/munin.log',
   }
 
   $fcgi_runlevels = '2345'

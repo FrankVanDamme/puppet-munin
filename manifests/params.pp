@@ -37,7 +37,7 @@ class munin::params {
   $max_graph_jobs = '15'
 
   $package_perlcidr = $facts[os][name] ? {
-    /(?i:Centos|Redhat|Scientific|Amazon|Linux)/ => $facts[os][release][full] ? {
+    /(?i:Centos|Redhat|Rocky|Scientific|Amazon|Linux)/ => $facts[os][release][full] ? {
       4        => 'perl-Net-CIDR-Lite',
       default  => 'perl-Net-CIDR',
     },

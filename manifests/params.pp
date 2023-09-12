@@ -15,7 +15,7 @@
 class munin::params {
 
   ### Module Specific parameters
-  $server = '127.0.0.1'
+  $server = [ '127.0.0.1' ]
   $server_local = false
   $address = $facts[networking][ip]
   $folder = ''

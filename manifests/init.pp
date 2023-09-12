@@ -5,7 +5,7 @@
 # == Module specific parameters
 #
 # [*server*]
-#   Ip of Munin server
+#   Ip(s) of Munin server(s)
 #
 # [*server_local*]
 #   If the local host is a Munin server
@@ -284,7 +284,7 @@
 #   Alessandro Franceschi <al@lab42.it/>
 #
 class munin (
-  $server              = params_lookup( 'server' ),
+  Array $server        = params_lookup( 'server' ),
   $server_local        = params_lookup( 'server_local' ),
   $folder              = params_lookup( 'folder' ),
   $grouplogic          = params_lookup( 'grouplogic' ),
@@ -367,15 +367,6 @@ class munin (
   $bool_firewall=any2bool($firewall)
   $bool_debug=any2bool($debug)
   $bool_audit_only=any2bool($audit_only)
-
-  ### Definition of some variables used in the module
-  $array_servers = is_array($munin::server) ? {
-    false     => $munin::server ? {
-      ''      => [],
-      default => split($munin::server, ','),
-    },
-    default   => $munin::server,
-  }
 
   ### Prepare folder for use in template
   $folder_prefix = $munin::folder ? {

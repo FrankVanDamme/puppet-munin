@@ -7,10 +7,10 @@
 #   The command to spawn a fcgi container
 #
 class munin::cgi (
-  $fcgi_runlevels   = params_lookup('fcgi_runlevels'),
-  $fcgi_command     = params_lookup('fcgi_command'),
-  $fcgi_reload_init = params_lookup('fcgi_reload_init'),
-  ) inherits munin {
+  $fcgi_runlevels   = $munin::params::fcgi_runlevels,
+  $fcgi_command     = $munin::params::fcgi_command,
+  $fcgi_reload_init = $munin::params::fcgi_reload_init,
+) inherits munin {
 
   if !defined(Package['spawn-fcgi']) {
     package { 'spawn-fcgi': ensure => $munin::manage_file; }

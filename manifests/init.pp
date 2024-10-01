@@ -375,7 +375,10 @@ class munin (
   }
 
   ### Grouping tag
-  $magic_tag = get_magicvar($munin::grouplogic)
+  $magic_tag = $munin::grouplogic ? {
+      ''      => '',
+      default => get_magicvar($munin::grouplogic),
+  }
 
   $manage_package = $munin::bool_absent ? {
     true  => 'absent',

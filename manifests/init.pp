@@ -406,7 +406,7 @@ class munin (
 
   $manage_service_autorestart = $munin::bool_service_autorestart ? {
     true    => Service[munin-node],
-    false   => undef,
+    #false   => undef,
   }
 
   $manage_file = $munin::bool_absent ? {

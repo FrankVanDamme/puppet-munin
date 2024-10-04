@@ -1,9 +1,9 @@
 # File Managed by Puppet
-
-<% if @fqdn -%>
-[<%= @folder_prefix %><%= @fqdn %>]
+ 
+<% if scope['networking']['fqdn'] -%>
+[<%= @folder_prefix %><%= scope['networking']['fqdn'] %>]
 <% else -%>
-[<%= @folder_prefix %><%= @hostname %>]
+[<%= @folder_prefix %><%= scope['networking']['hostname'] %>]
 <% end -%>
     address <%= scope.lookupvar('munin::address') %>
     port <%= scope.lookupvar('munin::port') %>

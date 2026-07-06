@@ -36,7 +36,7 @@ define munin::plugin (
 
   include munin
 
-  if $source {
+  if $source != '' {
     file { "Munin_plugin_${name}":
       ensure  => $ensure,
       path    => "${munin::plugins_dir}/${name}",
@@ -56,7 +56,7 @@ define munin::plugin (
     }
   }
 
-  if $content {
+  if $content != '' {
     file { "Munin_plugin_${name}":
       ensure  => $ensure,
       path    => "${munin::plugins_dir}/${name}",
@@ -76,7 +76,7 @@ define munin::plugin (
     }
   }
 
-  if $source_config {
+  if $source_config != '' {
     file { "Munin_plugin_conf_${name}":
       ensure  => $ensure,
       path    => "${munin::conf_dir_plugins}/${name}",
@@ -89,7 +89,7 @@ define munin::plugin (
     }
   }
 
-  if $content_config {
+  if $content_config != '' {
     file { "Munin_plugin_conf_${name}":
       ensure  => $ensure,
       path    => "${munin::conf_dir_plugins}/${name}",

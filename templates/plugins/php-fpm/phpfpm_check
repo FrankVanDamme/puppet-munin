@@ -18,23 +18,24 @@ Magick markers (optional - used by munin-config and some installation scripts):
 
 /* we only run from the command line */
 if (strcasecmp(PHP_SAPI, 'cli') != 0) {
-	print $argv[0] . ": may only be run from the cli!\n";
-	exit(1);
+    print $argv[0] . ": may only be run from the cli!\n";
+    exit(1);
 }
 
 /* default config */
 $my = array(
-	'url' => getenv('url') ? getenv('url') : 'http://127.0.0.1:80/status?json',
-	'fpmbin' => getenv('fpmbin') ? getenv('fpmbin') : 'php-fpm',
-	'self' => basename($argv[0]),
-	'pool' => 'default'
+    'url' => getenv('url') ? getenv('url') : '<%= @proto %>://127.0.0.1:<%= @port %><%= @fpm_status_path %>?json',
+    'fpmbin' => getenv('fpmbin') ? getenv('fpmbin') : 'php-fpm',
+    'self' => basename($argv[0]),
+    'pool' => 'default'
 );
 
 $urlDeductor = explode('__', basename($argv[0]), 2);
 if (count($urlDeductor) == 2) {
-	$my['url'] = 'https://' . $urlDeductor[1] . '/fpm.status.php?json';
-	$my['self'] = str_replace('__' . $urlDeductor[1], '', basename($argv[0]));
-	$my['pool'] = $urlDeductor[1];
+    # TODO: http/https protocol
+    $my['url'] = '<%= @proto %>://' . $urlDeductor[1] . '<%= @fpm_status_path %>?json';
+    $my['self'] = str_replace('__' . $urlDeductor[1], '', basename($argv[0]));
+    $my['pool'] = $urlDeductor[1];
 }
 
 require_once(__DIR__.'/phpfpm_lib.php');

@@ -22,6 +22,7 @@ class munin::params {
   $grouplogic = ''
   $extra_plugins = false
   $autoconfigure = true
+  $autoconfigure_clean = true
   $autoconfigure_template = $facts[os][name] ? {
     /(?i:OpenBSD)/ => 'munin/munin-autoconfigure-openbsd.erb',
     default        => 'munin/munin-autoconfigure.erb',

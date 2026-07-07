@@ -49,6 +49,9 @@
 #   Boolean that defines if you want to autoconfigure plugins: Default: true
 #   If true a nightly cron jobs re-runs the munin autoconfigure script
 #
+# [*autoconfigure_clean*]
+#   Clean plugin conf dir before autoconfigure; Default: true
+#
 # [*package_perlcidr*]
 #   Name of the Perl-Net CIDR package, required by the module for Munin
 #   Set it to blank ('') if you don't want it (default templates need it)
@@ -296,6 +299,7 @@ class munin (
   $cgi_graph_jobs      = $munin::params::cgi_graph_jobs,
   $max_graph_jobs      = $munin::params::max_graph_jobs,
   $autoconfigure       = $munin::params::autoconfigure,
+  $autoconfigure_clean = $munin::params::autoconfigure_clean,
   $autoconfigure_template = $munin::params::autoconfigure_template,
   $autoconfigure_file  = $munin::params::autoconfigure_file,
   $restart_or_reload   = $munin::params::restart_or_reload,

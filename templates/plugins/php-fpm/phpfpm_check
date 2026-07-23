@@ -32,9 +32,9 @@ $my = array(
 
 $urlDeductor = explode('__', basename($argv[0]), 2);
 if (count($urlDeductor) == 2) {
-    # TODO: http/https protocol
-    $my['url'] = '<%= @proto %>://' . $urlDeductor[1] . '<%= @fpm_status_path %>?json';
-    $my['self'] = str_replace('__' . $urlDeductor[1], '', basename($argv[0]));
+    $domain=preg_replace('/^http(s)?:\/\//', '', $urlDeductor[1]);
+    $my['url'] = '<%= @proto %>://127.0.0.1:<%= @port %><%= @fpm_status_path %>?json';
+    $my['self'] = str_replace('__' . $domain, '', basename($argv[0]));
     $my['pool'] = $urlDeductor[1];
 }
 

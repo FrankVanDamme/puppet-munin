@@ -27,7 +27,7 @@ function _check_phpfpm_average(array $my = array()) {
 /* connection check */
 function _check_phpfpm_connection(array $my = array()) {
 	/* fetch stats */
-	if (($data = _fetch_status($my['url'])) === false) {
+        if (($data = _fetch_status($my['url'], $my['pool'])) === false) {
 		/* this will just return U below */
 		$data = array();
 	}
@@ -67,7 +67,7 @@ function _check_phpfpm_memory(array $my = array()) {
 /* process check */
 function _check_phpfpm_process(array $my = array()) {
 	/* fetch stats */
-	if (($data = _fetch_status($my['url'])) === false) {
+        if (($data = _fetch_status($my['url'], $my['pool'])) === false) {
 		/* this will just return U below */
 		$data = array();
 	}
@@ -83,7 +83,7 @@ function _check_phpfpm_process(array $my = array()) {
 /* status check */
 function _check_phpfpm_status(array $my = array()) {
 	/* fetch stats */
-	if (($data = _fetch_status($my['url'])) === false) {
+        if (($data = _fetch_status($my['url'], $my['pool'])) === false) {
 		/* this will just return U below */
 		$data = array();
 	}
@@ -112,7 +112,7 @@ function _check_phpfpm_status(array $my = array()) {
 
 
 /* little curl helper */
-function _fetch_status($url) {
+function _fetch_status($url, $pool) {
 	/* init curl */
 	if (($ch = curl_init()) === false) {
 		/* return false */
@@ -125,6 +125,7 @@ function _fetch_status($url) {
 		CURLOPT_SSL_VERIFYHOST => false,
 		CURLOPT_SSL_VERIFYPEER => false,
 		CURLOPT_URL => $url,
+                CURLOPT_HTTPHEADER => ["Host: " . $pool],
 	);
 	/* set curl options */
 	if (curl_setopt_array($ch, $options) !== true) {
@@ -214,7 +215,7 @@ function _autoconf_default(array $my = array()) {
 		exit(1);
 	}
 	/* okay make sure we can connect and fetch status */
-	if (($data = _fetch_status($my['url'])) === false) {
+        if (($data = _fetch_status($my['url'], $my['pool'])) === false) {
 		print "no (could not fetch or decode status)\n";
 		exit(1);
 	}
